@@ -33,3 +33,7 @@ tsc
 ```bash
 node dist/index.js
 ```
+
+
+
+Duas validações na uma na  view e outra  no controller 

@@ -5,37 +5,65 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 class EstoqueScreen {
+    // Injeção de Dependência
     constructor(controller) {
         this.prompt = (0, prompt_sync_1.default)();
-        this.controller = controller;
+        this.produtos = [];
+        this.estoque = controller;
     }
-    adicionarProdutos() {
-        let nome;
-        let quantidade;
-        let preco;
-        let categoria;
-        console.log("Digite Categoria:");
-        categoria = this.prompt();
-        console.log("\n" + categoria);
-        console.log("Digite Nome :");
-        nome = this.prompt();
-        console.log("\n" + nome);
-        console.log("Digite Quantidade:");
-        quantidade = this.prompt();
-        console.log("\n" + quantidade);
-        console.log("Digite Preço:");
-        preco = this.prompt();
-        this.controller.adicionarProdutos(categoria, nome, preco, quantidade);
+    // Método principal para iniciar o processo
+    adicionarProdutosView() {
+        const categoria = this.promptCategoria();
+        const nome = this.promptNome();
+        const preco = this.promptPreco();
+        const quantidade = this.promptQuantidade();
+        // Objeto do produto
+        const produto = { categoria, nome, preco, quantidade };
+        // console.log(produto);
+        // Enviar para o controlador
+        this.estoque.adicionarProduto(produto);
     }
+    // Métodos auxiliares para entrada de dados
+    promptCategoria() {
+        console.log("Digite a categoria do produto:");
+        return this.prompt();
+    }
+    promptNome() {
+        console.log("Digite o nome do produto:");
+        return this.prompt();
+    }
+    promptPreco() {
+        console.log("Digite o preço do produto:");
+        const preco = Number(this.prompt());
+        if (isNaN(preco)) {
+            console.log("Preço inválido, por favor insira um número válido.");
+            return this.promptPreco();
+        }
+        return preco;
+    }
+    promptQuantidade() {
+        console.log("Digite a quantidade do produto:");
+        const quantidade = Number(this.prompt());
+        if (isNaN(quantidade)) {
+            console.log("Quantidade inválida, por favor insira um número válido.");
+            return this.promptQuantidade();
+        }
+        return quantidade;
+    }
+    // Métodos para operações de estoque
     listarProdutos() {
-        console.log("Entrou no lista Produtos");
+        console.log("Entrou no listar Produtos");
+        // Adicionar lógica de listagem aqui
     }
     atualizarQuantidade() {
-        console.log("Entro no atualiza quantidade");
+        console.log("Entrou no atualizar quantidade");
+        // Adicionar lógica de atualização de quantidade aqui
     }
     removerProduto() {
         console.log("Entrou no remover Produto");
+        // Adicionar lógica de remoção aqui
     }
+    // Exibir o menu e interagir com o usuário
     exibirMenu() {
         while (true) {
             console.log(`
@@ -52,7 +80,7 @@ class EstoqueScreen {
                     this.listarProdutos();
                     break;
                 case "2":
-                    this.adicionarProdutos();
+                    this.adicionarProdutosView();
                     break;
                 case "3":
                     this.atualizarQuantidade();
@@ -64,7 +92,7 @@ class EstoqueScreen {
                     console.log("Saindo ...");
                     return;
                 default:
-                    console.log("Opção Iválida");
+                    console.log("Opção Inválida");
             }
         }
     }

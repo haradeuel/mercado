@@ -5,21 +5,26 @@ import EstoqueScreen from "../view/EstoqueScreen";
 export default class EstoqueController{
     private database:Database;
     private screen: EstoqueScreen = new EstoqueScreen(this);
-    
+    private produtos: { categoria: string; nome: string; preco: number; quantidade: number }[] = [];
+
     public constructor(database: Database){
         this.database = database;
     }
 
-    public listarProdutos(): Produto[]{
-        return this.database.getProdutos();
+
+  // Adiciona um produto ao estoque
+    public adicionarProduto(produto: { categoria: string; nome: string; preco: number; quantidade: number }) {
+        console.log(produto);
+        this.database.adicionarProduto(produto);
+        const produtos = this.database.getProdutos();
+        console.log("Produto adicionado com sucesso!",produtos);
     }
-    public adicionarProdutos(categoria: string, nome: string, preco: number, quantidade: number ): void{
-        this.database.adicionarProduto(categoria,nome, preco, quantidade);
-    }
-    public atualizarQuantidade(id: number, quantidade: number):void{
-        this.database.atualizarQuantidade(id,quantidade);
-    }
-    public removerProduto(id: number):void{
-        this.database.removerProduto(id);
-    }
+
+   
+
+    
+
+   
+
+    
 }
