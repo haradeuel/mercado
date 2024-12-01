@@ -1,79 +1,29 @@
 import EstoqueController from "../control/EstoqueController";
+import AdicionarScreen from "./AdicionarScreen";
+import ListarScreen from "./ListarScreen";
+// import RemoverScreen from "./RemoverScreen";
+// import AdicionarQuantidadeScreen from "./AdicionarQuantidadeScreen";
 import promptSync from "prompt-sync";
 
 export default class EstoqueScreen {
-
   private prompt = promptSync();
-  private estoque: EstoqueController;
-  private produtos: { categoria: string; nome: string; preco: number; quantidade: number }[] = [];
+  private estoqueController: EstoqueController;
 
-  // Injeção de Dependência
-  public constructor(controller: EstoqueController) {
-    this.estoque = controller;
+  private adicionarScreen: AdicionarScreen;
+  private listarScreen: ListarScreen;
+  private removerScreen: RemoverScreen;
+  private adicionarQuantidadeScreen: AdicionarQuantidadeScreen;
+
+  constructor(controller: EstoqueController) {
+    this.estoqueController = controller;
+
+    // Inicializa as views
+    this.adicionarScreen = new AdicionarScreen(controller);
+    this.listarScreen = new ListarScreen(controller);
+    
   }
 
-  // Método principal para iniciar o processo
-  public adicionarProdutosView() {
-    const categoria = this.promptCategoria();
-    const nome = this.promptNome();
-    const preco = this.promptPreco();
-    const quantidade = this.promptQuantidade();
-
-    // Objeto do produto
-    const produto = { categoria, nome, preco, quantidade };
-    // console.log(produto);
-    // Enviar para o controlador
-    this.estoque.adicionarProduto(produto);
-  }
-
-  // Métodos auxiliares para entrada de dados
-  private promptCategoria(): string {
-    console.log("Digite a categoria do produto:");
-    return this.prompt();
-  }
-
-  private promptNome(): string {
-    console.log("Digite o nome do produto:");
-    return this.prompt();
-  }
-
-  private promptPreco(): number {
-    console.log("Digite o preço do produto:");
-    const preco = Number(this.prompt());
-    if (isNaN(preco)) {
-      console.log("Preço inválido, por favor insira um número válido.");
-      return this.promptPreco();
-    }
-    return preco;
-  }
-
-  private promptQuantidade(): number {
-    console.log("Digite a quantidade do produto:");
-    const quantidade = Number(this.prompt());
-    if (isNaN(quantidade)) {
-      console.log("Quantidade inválida, por favor insira um número válido.");
-      return this.promptQuantidade();
-    }
-    return quantidade;
-  }
-
-  // Métodos para operações de estoque
-  private listarProdutos() {
-    console.log("Entrou no listar Produtos");
-    // Adicionar lógica de listagem aqui
-  }
-
-  private atualizarQuantidade() {
-    console.log("Entrou no atualizar quantidade");
-    // Adicionar lógica de atualização de quantidade aqui
-  }
-
-  private removerProduto() {
-    console.log("Entrou no remover Produto");
-    // Adicionar lógica de remoção aqui
-  }
-
-  // Exibir o menu e interagir com o usuário
+  // Exibir o menu de opções
   public exibirMenu(): void {
     while (true) {
       console.log(`
@@ -89,16 +39,16 @@ export default class EstoqueScreen {
 
       switch (opcao) {
         case "1":
-          this.listarProdutos();
+          this.listarScreen.listarProdutos(); // Chama a view de listar produtos
           break;
         case "2":
-          this.adicionarProdutosView();
+          this.adicionarScreen.adicionarProduto(); // Chama o método da AdicionarScreen
           break;
         case "3":
-          this.atualizarQuantidade();
+          this.adicionarQuantidadeScreen.adicionarQuantidade(); // Chama a view de adicionar quantidade
           break;
         case "4":
-          this.removerProduto();
+          this.removerScreen.removerProduto(); // Chama a view de remover produto
           break;
         case "5":
           console.log("Saindo ...");

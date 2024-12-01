@@ -10,4 +10,4 @@ const database = new Database_1.default(); // Certifique-se de que a classe Data
 // Inicialize o controlador do estoque
 const estoqueController = new EstoqueController_1.default(database);
 // Inicialize a interface do estoque (EstoqueScreen)
-estoqueController.screen.exibirMenu();
+estoqueController.getScreen().exibirMenu();

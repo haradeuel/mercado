@@ -8,4 +8,4 @@ const database = new Database(); // Certifique-se de que a classe Database está
 const estoqueController = new EstoqueController(database);
 
 // Inicialize a interface do estoque (EstoqueScreen)
-estoqueController.screen.exibirMenu();
+estoqueController.getScreen().exibirMenu();

@@ -1,14 +1,16 @@
-export default class Produto {
+export default abstract class Produto {
     private id: number;
     private nome: string;
     private preco: number;
     private quantidade: number;
+    private categoria: number;
 
-    public constructor(id: number, nome: string, preco: number, quantidade: number) {
-        this.id = id;
+    constructor(id: number, nome: string, preco: number, quantidade: number, categoria: number) {
+        this.id = id;   
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
+        this.categoria = categoria;
     }
 
     public getId(): number {
@@ -27,7 +29,11 @@ export default class Produto {
         return this.quantidade;
     }
 
-    public setQuantidade(quantidade: number): void {
+    public getCategoria(): number {
+        return this.categoria;
+    }
+
+    setQuantidade(quantidade: number): void {
         this.quantidade = quantidade;
     }
 }
