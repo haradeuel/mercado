@@ -8,50 +8,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Database = void 0;
-// database.ts
 const pg_1 = require("pg");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 class Database {
-    constructor() {
-        this.pool = new pg_1.Pool({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
-            port: parseInt(process.env.DB_PORT || '5432'),
-        });
-    }
-    connect() {
+    // Função para criar a conexão com o banco
+    static criarConexao() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.pool = new pg_1.Pool({
+                user: 'postgres', // Nome do usuário do PostgreSQL
+                host: 'localhost', // Host do banco de dados
+                database: 'mercado', // Nome do banco
+                password: 'hdjk', // Senha do banco de dados
+                port: 5432, // Porta padrão do PostgreSQL
+            });
             try {
+                // Tenta conectar ao banco de dados
                 yield this.pool.connect();
-                console.log('Conectado ao banco de dados!');
+                console.log('Banco de dados conectado com sucesso!');
             }
-            catch (error) {
-                console.error('Erro ao conectar:', error);
+            catch (err) {
+                // Caso ocorra um erro, exibe a mensagem de erro e finaliza o processo
+                console.error('Erro ao conectar no banco de dados:', err);
+                process.exit(1); // Sai do processo se não conseguir conectar
             }
         });
     }
-    query(text, params) {
+    // Função para obter a conexão
+    static getConexao() {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const result = yield this.pool.query(text, params);
-                return result.rows;
+            if (!this.pool) {
+                yield this.criarConexao(); // Cria a conexão se não houver uma ativa
             }
-            catch (error) {
-                console.error('Erro na query:', error);
-                throw error;
-            }
+            return this.pool; // Retorna a conexão ativa
         });
-    }
-    close() {
-        this.pool.end();
     }
 }
 exports.Database = Database;

@@ -9,22 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// index.ts
-const Database_1 = require("./db/Database");
+const EstoqueController_1 = require("./control/EstoqueController");
+// Função principal para rodar o sistema
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const db = new Database_1.Database();
-        try {
-            yield db.connect();
-            // Exemplo de query
-            const result = yield db.query('SELECT NOW() AS current_time');
-            console.log('Atual:', result[0].current_time);
-            // Fechar a conexão quando terminarmos
-            db.close();
-        }
-        catch (error) {
-            console.error('Erro geral:', error);
-        }
+        const estoqueController = new EstoqueController_1.EstoqueController(); // Instancia o controlador
+        // Exibe o menu e aguarda a interação
+        yield estoqueController.exibirMenu(); // O controlador cuida de tudo
     });
 }
-main().catch(console.error);
+// Executa a função principal
+main();
