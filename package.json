@@ -10,9 +10,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "pg": "^8.13.1",
     "prompt-sync": "^4.2.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.10",
     "@types/prompt-sync": "^4.2.3"
   }
 }
