@@ -14,5 +14,8 @@ class ProdutoConcreto extends Produto_1.default {
     detalhesProduto() {
         return `Produto: ${this.nome}, Preço: R$${this.preco}, Quantidade: ${this.quantidade}`;
     }
+    descricao() {
+        throw new Error("Method not implemented.");
+    }
 }
 exports.ProdutoConcreto = ProdutoConcreto;

@@ -29,7 +29,7 @@ class ListarProdutosScreen {
             else {
                 console.log("Produtos cadastrados:");
                 // Verifique a lista de produtos antes de exibi-los
-                console.log(produtos);
+                //console.log(produtos);
                 // Exibe os produtos
                 produtos.forEach((produto, index) => {
                     console.log(`${index + 1} - ID: ${produto.id}, Nome: ${produto.nome}, Preço: ${produto.preco}, Quantidade: ${produto.quantidade}, Categoria: ${produto.categoria}`);

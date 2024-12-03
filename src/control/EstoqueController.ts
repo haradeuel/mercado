@@ -6,17 +6,19 @@ import { EstoqueScreen } from "../view/EstoqueScreen";
 
 export class EstoqueController {
   private estoqueScreen: EstoqueScreen = new EstoqueScreen(this);
+  private adicionarScreen: AdicionarScreen = new AdicionarScreen(this);
+  
+  
 
-  constructor() {
-    
-     // Passa a instância do controlador para a EstoqueScreen
+  public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):ProdutoConcreto{
+      return new ProdutoConcreto(nome,preco,quantidade,categoriaString);
   }
-
+   
   // Função para exibir o menu e processar a escolha do usuário
   public async exibirMenu(): Promise<void> {
     await this.estoqueScreen.exibirMenu(); // Chama o método de exibição do menu na EstoqueScreen
   }
-
+  
   // Método para adicionar um novo produto
   public static async adicionarProduto(produto: Produto): Promise<void> {
     const pool = await Database.getConexao();

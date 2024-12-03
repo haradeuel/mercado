@@ -39,5 +39,9 @@ export default abstract class Produto {
     public get categoria(): string {
       return this._categoria;
     }
+
+    abstract descricao(): string; 
+       
+    
   }
   

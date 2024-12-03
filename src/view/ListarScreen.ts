@@ -16,7 +16,7 @@ export default class ListarProdutosScreen {
       console.log("Produtos cadastrados:");
 
       // Verifique a lista de produtos antes de exibi-los
-      console.log(produtos);
+      //console.log(produtos);
 
       // Exibe os produtos
       produtos.forEach((produto, index) => {

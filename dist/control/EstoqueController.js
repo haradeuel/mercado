@@ -8,15 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstoqueController = void 0;
 const Database_1 = require("../db/Database");
 const ProdutoConcreto_1 = require("../model/ProdutoConcreto");
+const AdicionarScreen_1 = __importDefault(require("../view/AdicionarScreen"));
 const EstoqueScreen_1 = require("../view/EstoqueScreen");
 class EstoqueController {
     constructor() {
         this.estoqueScreen = new EstoqueScreen_1.EstoqueScreen(this);
-        // Passa a instância do controlador para a EstoqueScreen
+        this.adicionarScreen = new AdicionarScreen_1.default(this);
+    }
+    getNewProduto(nome, preco, quantidade, categoriaString) {
+        return new ProdutoConcreto_1.ProdutoConcreto(nome, preco, quantidade, categoriaString);
     }
     // Função para exibir o menu e processar a escolha do usuário
     exibirMenu() {

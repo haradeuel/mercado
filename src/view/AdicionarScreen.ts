@@ -1,12 +1,18 @@
 import promptSync from 'prompt-sync'; // Importa o prompt-sync
 import { EstoqueController } from "../control/EstoqueController"; // Importa o controlador
 import { ProdutoConcreto } from "../model/ProdutoConcreto"; // Importa o produto concreto
+import Produto from '../model/Produto';
 
 export default class AdicionarScreen {
   private prompt = promptSync();
+  private controlador: EstoqueController;
+
+  constructor(controlador: EstoqueController){
+    this.controlador = controlador;
+  }
 
   public async adicionarProduto(): Promise<void> {
-    console.log("Você escolheu adicionar um produto.");
+    //console.log("Você escolheu adicionar um produto.");
   
     const nome = this.prompt("Digite o nome do produto: ");
     const preco = parseFloat(this.prompt("Digite o preço do produto: "));
@@ -31,8 +37,9 @@ export default class AdicionarScreen {
       console.log("Categoria inválida. Produto não adicionado.");
       return;
     }
-  
-    const novoProduto = new ProdutoConcreto(nome, preco, quantidade, categoriaString);
+    //PEdir pro controle me dar um produto, não posso instanciar um 
+    let novoProduto :Produto = this.controlador.getNewProduto(nome, preco, quantidade, categoriaString);
+
     await EstoqueController.adicionarProduto(novoProduto);
   
   }

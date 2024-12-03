@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync
 const EstoqueController_1 = require("../control/EstoqueController"); // Importa o controlador
-const ProdutoConcreto_1 = require("../model/ProdutoConcreto"); // Importa o produto concreto
 class AdicionarScreen {
-    constructor() {
+    constructor(controlador) {
         this.prompt = (0, prompt_sync_1.default)();
+        this.controlador = controlador;
     }
     adicionarProduto() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Você escolheu adicionar um produto.");
+            //console.log("Você escolheu adicionar um produto.");
             const nome = this.prompt("Digite o nome do produto: ");
             const preco = parseFloat(this.prompt("Digite o preço do produto: "));
             const quantidade = parseInt(this.prompt("Digite a quantidade do produto: "), 10);
@@ -42,7 +42,8 @@ class AdicionarScreen {
                 console.log("Categoria inválida. Produto não adicionado.");
                 return;
             }
-            const novoProduto = new ProdutoConcreto_1.ProdutoConcreto(nome, preco, quantidade, categoriaString);
+            //PEdir pro controle me dar um produto, não posso instanciar um 
+            let novoProduto = this.controlador.getNewProduto(nome, preco, quantidade, categoriaString);
             yield EstoqueController_1.EstoqueController.adicionarProduto(novoProduto);
         });
     }
