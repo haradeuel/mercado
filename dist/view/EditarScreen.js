@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync
 const EstoqueController_1 = require("../control/EstoqueController");
 class EditarScreen {
-    constructor() {
+    constructor(controlador) {
         this.prompt = (0, prompt_sync_1.default)();
+        this.controlador = controlador;
     }
     editarProduto() {
         return __awaiter(this, void 0, void 0, function* () {

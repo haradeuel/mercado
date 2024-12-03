@@ -17,10 +17,30 @@ const Database_1 = require("../db/Database");
 const ProdutoConcreto_1 = require("../model/ProdutoConcreto");
 const AdicionarScreen_1 = __importDefault(require("../view/AdicionarScreen"));
 const EstoqueScreen_1 = require("../view/EstoqueScreen");
+const ListarScreen_1 = __importDefault(require("../view/ListarScreen"));
+const EditarScreen_1 = __importDefault(require("../view/EditarScreen"));
+const RemoverScreen_1 = __importDefault(require("../view/RemoverScreen"));
 class EstoqueController {
     constructor() {
         this.estoqueScreen = new EstoqueScreen_1.EstoqueScreen(this);
-        this.adicionarScreen = new AdicionarScreen_1.default(this);
+        this.screens = new Map();
+        this.initializeScreens();
+    }
+    initializeScreens() {
+        this.screens.set('adicionar', new AdicionarScreen_1.default(this));
+        this.screens.set('listarProdutos', new ListarScreen_1.default(this));
+        this.screens.set('editarProduto', new EditarScreen_1.default(this));
+        this.screens.set('removerProduto', new RemoverScreen_1.default(this));
+    }
+    getScreen(screenName) {
+        console.log(`Tentando recuperar a tela: ${screenName}`);
+        const screen = this.screens.get(screenName);
+        if (!screen) {
+            console.error(`Tela '${screenName}' não encontrada.`);
+            return undefined;
+        }
+        console.log(`Tela '${screenName}' recuperada com sucesso.`);
+        return screen;
     }
     getNewProduto(nome, preco, quantidade, categoriaString) {
         return new ProdutoConcreto_1.ProdutoConcreto(nome, preco, quantidade, categoriaString);

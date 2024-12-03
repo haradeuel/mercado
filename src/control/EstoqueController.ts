@@ -3,11 +3,36 @@ import Produto from "../model/Produto";
 import { ProdutoConcreto } from "../model/ProdutoConcreto";
 import AdicionarScreen from "../view/AdicionarScreen";
 import { EstoqueScreen } from "../view/EstoqueScreen";
+import ListarScreen from "../view/ListarScreen";
+import EditarScreen from "../view/EditarScreen";
+import RemoverScreen from "../view/RemoverScreen";
+type Screens = AdicionarScreen | ListarScreen | EditarScreen | RemoverScreen;
 
 export class EstoqueController {
   private estoqueScreen: EstoqueScreen = new EstoqueScreen(this);
-  private adicionarScreen: AdicionarScreen = new AdicionarScreen(this);
+  private screens: Map<string, Screens> = new Map();
+
+  constructor(){
+    this.initializeScreens();
+  }
   
+  private initializeScreens(): void {
+    this.screens.set('adicionar', new AdicionarScreen(this));
+    this.screens.set('listarProdutos', new ListarScreen(this));
+    this.screens.set('editarProduto', new EditarScreen(this));
+    this.screens.set('removerProduto', new RemoverScreen(this));
+  }
+
+  public getScreen(screenName: string): any {
+    console.log(`Tentando recuperar a tela: ${screenName}`);
+    const screen = this.screens.get(screenName);
+    if (!screen) {
+        console.error(`Tela '${screenName}' não encontrada.`);
+        return undefined;
+    }
+    console.log(`Tela '${screenName}' recuperada com sucesso.`);
+    return screen;
+  }
   
 
   public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):ProdutoConcreto{

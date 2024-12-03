@@ -3,7 +3,11 @@ import { EstoqueController } from "../control/EstoqueController"; // Importa o c
 
 export default class RemoverScreen {
   private prompt = promptSync();
+  private controlador: EstoqueController;
 
+  constructor(controlador: EstoqueController){
+    this.controlador = controlador;
+  }
   // Método para remover o produto
   public async removerProduto(): Promise<void> {
     //console.log("Você escolheu remover um produto.");

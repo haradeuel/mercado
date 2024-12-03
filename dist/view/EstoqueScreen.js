@@ -14,18 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstoqueScreen = void 0;
 const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync
-const AdicionarScreen_1 = __importDefault(require("./AdicionarScreen")); // Importa a tela de adicionar produto
-const ListarScreen_1 = __importDefault(require("./ListarScreen"));
-const EditarScreen_1 = __importDefault(require("./EditarScreen"));
-const RemoverScreen_1 = __importDefault(require("./RemoverScreen"));
 class EstoqueScreen {
-    constructor(controlador) {
+    // private adicionar: AdicionarScreen;
+    // private listarProdutos: ListarScreen;
+    // private editarProduto: EditarScreen;
+    // private removerProduto: RemoverScreen
+    // private controlador: EstoqueController;
+    constructor(controller) {
         this.prompt = (0, prompt_sync_1.default)();
-        this.controlador = controlador;
-        this.adicionar = new AdicionarScreen_1.default();
-        this.listarProdutos = new ListarScreen_1.default();
-        this.editarProduto = new EditarScreen_1.default(); // Inicializa a tela de editar produto
-        this.removerProduto = new RemoverScreen_1.default();
+        // this.controlador = controlador;
+        // this.adicionar = new AdicionarScreen();
+        // this.listarProdutos = new ListarScreen();
+        // this.editarProduto = new EditarScreen();  // Inicializa a tela de editar produto
+        // this.removerProduto = new RemoverScreen();
+        this.controller = controller;
     }
     exibirMenu() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -42,16 +44,17 @@ class EstoqueScreen {
                 const opcao = this.prompt('Digite o número da opção desejada: ');
                 switch (opcao) {
                     case '1':
-                        yield this.adicionar.adicionarProduto(); // Chama a tela de adicionar produto
+                        let adicionarScreen = this.controller.getScreen("adicionar");
+                        yield adicionarScreen.adicionarProduto();
                         break;
                     case '2':
-                        yield this.listarProdutos.listarProdutos(); // Chama a tela de listar produtos
+                        //await this.listarProdutos.listarProdutos();  // Chama a tela de listar produtos
                         break;
                     case '3':
-                        yield this.editarProduto.editarProduto(); // Chama a tela de editar produto
+                        //await this.editarProduto.editarProduto();  // Chama a tela de editar produto
                         break;
                     case '4':
-                        yield this.removerProduto.removerProduto();
+                        //await this.removerProduto.removerProduto();
                         break;
                     case '5':
                         console.log('Saindo do sistema...');
