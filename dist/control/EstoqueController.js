@@ -28,9 +28,9 @@ class EstoqueController {
     }
     initializeScreens() {
         this.screens.set('adicionar', new AdicionarScreen_1.default(this));
-        this.screens.set('listarProdutos', new ListarScreen_1.default(this));
-        this.screens.set('editarProduto', new EditarScreen_1.default(this));
-        this.screens.set('removerProduto', new RemoverScreen_1.default(this));
+        this.screens.set('listar', new ListarScreen_1.default(this));
+        this.screens.set('editar', new EditarScreen_1.default(this));
+        this.screens.set('remover', new RemoverScreen_1.default(this));
     }
     getScreen(screenName) {
         console.log(`Tentando recuperar a tela: ${screenName}`);

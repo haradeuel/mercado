@@ -18,9 +18,9 @@ export class EstoqueController {
   
   private initializeScreens(): void {
     this.screens.set('adicionar', new AdicionarScreen(this));
-    this.screens.set('listarProdutos', new ListarScreen(this));
-    this.screens.set('editarProduto', new EditarScreen(this));
-    this.screens.set('removerProduto', new RemoverScreen(this));
+    this.screens.set('listar', new ListarScreen(this));
+    this.screens.set('editar', new EditarScreen(this));
+    this.screens.set('remover', new RemoverScreen(this));
   }
 
   public getScreen(screenName: string): any {
