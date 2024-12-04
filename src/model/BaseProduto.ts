@@ -1,4 +1,4 @@
-export default abstract class Produto {
+export default abstract class BaseProduto {
     private _id: number;
     private _nome: string;
     private _preco: number;
@@ -40,8 +40,8 @@ export default abstract class Produto {
       return this._categoria;
     }
 
-    abstract descricao(): string; 
-       
+    abstract descricao(): string;
+
     
   }
   

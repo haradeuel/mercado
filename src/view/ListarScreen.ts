@@ -1,12 +1,18 @@
 import promptSync from 'prompt-sync';  // Importa o prompt-sync para capturar a entrada do usuário
 import { EstoqueController } from '../control/EstoqueController';
+import {ScreenView} from "./screen";
 
-export default class ListarProdutosScreen {
-  private prompt = promptSync();
+export default class ListarScreen extends ScreenView {
+  private controlador: EstoqueController;
+
+  constructor(controlador: EstoqueController){
+    super()
+    this.controlador = controlador;
+  }
 
   public async listarProdutos(): Promise<void> {
-    console.log("Você escolheu listar os produtos.");
-
+    this.log("Você escolheu listar os produtos.");
+    
     // Chama o controlador para obter os produtos
     const produtos = await EstoqueController.listarProdutos();
     

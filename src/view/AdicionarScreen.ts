@@ -1,14 +1,20 @@
 import promptSync from 'prompt-sync'; // Importa o prompt-sync
 import { EstoqueController } from "../control/EstoqueController"; // Importa o controlador
-import { ProdutoConcreto } from "../model/ProdutoConcreto"; // Importa o produto concreto
-import Produto from '../model/Produto';
+import { Product } from "../model/Product"; // Importa o produto concreto
+import BaseProduto from '../model/BaseProduto';
+import { ScreenView } from "./screen";
 
-export default class AdicionarScreen {
-  private prompt = promptSync();
+
+export default class AdicionarScreen extends ScreenView {
   private controlador: EstoqueController;
 
   constructor(controlador: EstoqueController){
+    super()
     this.controlador = controlador;
+  }
+
+  prompt(message: string) {
+    return this.promptSync(`[Adicionar] ${message}]`);
   }
 
   public async adicionarProduto(): Promise<void> {
@@ -38,9 +44,8 @@ export default class AdicionarScreen {
       return;
     }
     //PEdir pro controle me dar um produto, não posso instanciar um 
-    let novoProduto :Produto = this.controlador.getNewProduto(nome, preco, quantidade, categoriaString);
+    let novoProduto :BaseProduto = this.controlador.getNewProduto(nome, preco, quantidade, categoriaString);
 
-    await EstoqueController.adicionarProduto(novoProduto);
-  
+    await this.controlador.adicionarProduto(novoProduto);
   }
 }

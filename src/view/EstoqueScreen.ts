@@ -7,18 +7,21 @@ import RemoverScreen from './RemoverScreen';
 
 export class EstoqueScreen {
   private prompt = promptSync();
-  private adicionar: AdicionarScreen;
-  private listarProdutos: ListarScreen;
-  private editarProduto: EditarScreen;
-  private removerProduto: RemoverScreen
-  private controlador: EstoqueController;
+  private controller: EstoqueController;
+  // private adicionar: AdicionarScreen;
+  // private listarProdutos: ListarScreen;
+  // private editarProduto: EditarScreen;
+  // private removerProduto: RemoverScreen
+  // private controlador: EstoqueController;
 
-  constructor(controlador: EstoqueController) {
-    this.controlador = controlador;
-    this.adicionar = new AdicionarScreen();
-    this.listarProdutos = new ListarScreen();
-    this.editarProduto = new EditarScreen();  // Inicializa a tela de editar produto
-    this.removerProduto = new RemoverScreen();
+
+  constructor(controller: EstoqueController) {
+    // this.controlador = controlador;
+    // this.adicionar = new AdicionarScreen();
+    // this.listarProdutos = new ListarScreen();
+    // this.editarProduto = new EditarScreen();  // Inicializa a tela de editar produto
+    // this.removerProduto = new RemoverScreen();
+    this.controller = controller;
   }
 
   public async exibirMenu(): Promise<void> {
@@ -37,16 +40,17 @@ export class EstoqueScreen {
 
       switch (opcao) {
         case '1':
-          await this.adicionar.adicionarProduto();  // Chama a tela de adicionar produto
+          let adicionarScreen = this.controller.getScreen("adicionar");
+          await adicionarScreen.adicionarProduto();
           break;
         case '2':
-          await this.listarProdutos.listarProdutos();  // Chama a tela de listar produtos
+          //await this.listarProdutos.listarProdutos();  // Chama a tela de listar produtos
           break;
         case '3':
-          await this.editarProduto.editarProduto();  // Chama a tela de editar produto
+          //await this.editarProduto.editarProduto();  // Chama a tela de editar produto
           break;
         case '4':
-          await this.removerProduto.removerProduto();
+          //await this.removerProduto.removerProduto();
           break;  
         case '5':
           console.log('Saindo do sistema...');

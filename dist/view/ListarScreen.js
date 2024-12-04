@@ -14,9 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync para capturar a entrada do usuário
 const EstoqueController_1 = require("../control/EstoqueController");
-class ListarProdutosScreen {
-    constructor() {
+class ListarScreen {
+    constructor(controlador) {
         this.prompt = (0, prompt_sync_1.default)();
+        this.controlador = controlador;
     }
     listarProdutos() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,4 +39,4 @@ class ListarProdutosScreen {
         });
     }
 }
-exports.default = ListarProdutosScreen;
+exports.default = ListarScreen;

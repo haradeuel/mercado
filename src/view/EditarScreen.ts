@@ -3,7 +3,11 @@ import { EstoqueController } from '../control/EstoqueController';
 
 export default class EditarScreen {
   private prompt = promptSync();
+  private controlador: EstoqueController;
 
+  constructor(controlador: EstoqueController){
+    this.controlador = controlador;
+  }
   public async editarProduto(): Promise<void> {
     console.log("Você escolheu editar um produto.");
 

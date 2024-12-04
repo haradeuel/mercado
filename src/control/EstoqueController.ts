@@ -1,17 +1,47 @@
 import { Database } from "../db/Database";
-import Produto from "../model/Produto";
-import { ProdutoConcreto } from "../model/ProdutoConcreto";
+import BaseProduto from "../model/BaseProduto";
+import { Product } from "../model/Product";
 import AdicionarScreen from "../view/AdicionarScreen";
 import { EstoqueScreen } from "../view/EstoqueScreen";
+import ListarScreen from "../view/ListarScreen";
+import EditarScreen from "../view/EditarScreen";
+import RemoverScreen from "../view/RemoverScreen";
+
+import {ProductRepository} from "../db/product-repository";
+type Screens = AdicionarScreen | ListarScreen | EditarScreen | RemoverScreen;
 
 export class EstoqueController {
   private estoqueScreen: EstoqueScreen = new EstoqueScreen(this);
-  private adicionarScreen: AdicionarScreen = new AdicionarScreen(this);
+  private screens: Map<string, Screens> = new Map();
+
+  private repository: ProductRepository;
+
+  constructor(productRepository: ProductRepository) {
+    this.initializeScreens();
+    this.repository = productRepository;
+  }
   
+  private initializeScreens(): void {
+    this.screens.set('adicionar', new AdicionarScreen(this));
+    this.screens.set('listarProdutos', new ListarScreen(this));
+    this.screens.set('editarProduto', new EditarScreen(this));
+    this.screens.set('removerProduto', new RemoverScreen(this));
+  }
+
+  public getScreen(screenName: string): any {
+    console.log(`Tentando recuperar a tela: ${screenName}`);
+    const screen = this.screens.get(screenName);
+    if (!screen) {
+        console.error(`Tela '${screenName}' não encontrada.`);
+        return undefined;
+    }
+    console.log(`Tela '${screenName}' recuperada com sucesso.`);
+    return screen;
+  }
   
 
-  public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):ProdutoConcreto{
-      return new ProdutoConcreto(nome,preco,quantidade,categoriaString);
+  public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):Product{
+      return new Product(nome,preco,quantidade,categoriaString);
   }
    
   // Função para exibir o menu e processar a escolha do usuário
@@ -20,30 +50,8 @@ export class EstoqueController {
   }
   
   // Método para adicionar um novo produto
-  public static async adicionarProduto(produto: Produto): Promise<void> {
-    const pool = await Database.getConexao();
-
-    try {
-      // Query para inserir o produto na tabela 'produtos'
-      const query = `
-        INSERT INTO produtos (nome, preco, quantidade,categoria)
-        VALUES ($1, $2, $3,$4)
-        RETURNING id
-      `;
-
-      // Valores a serem inseridos
-      const valores = [produto.nome, produto.preco, produto.quantidade,produto.categoria];
-
-      // Executa a query para inserir e obter o ID gerado
-      const resultado = await pool.query(query, valores);
-      const idGerado = resultado.rows[0].id;
-
-      // Atribui o ID gerado pelo banco ao produto usando o setter
-      produto.id = idGerado; // Usando o setter para atribuir o id
-
-    } catch (err) {
-      console.error("Erro ao adicionar produto:", err);
-    }
+  public async adicionarProduto(produto: BaseProduto): Promise<void> {
+    await this.repository.insertProduct(produto)
   }
   
   public static async removerProduto(id: number): Promise<void> {
@@ -65,7 +73,7 @@ export class EstoqueController {
     }
   }
 
-  public static async listarProdutos(): Promise<Produto[]> {
+  public static async listarProdutos(): Promise<BaseProduto[]> {
     const pool = await Database.getConexao();
     try {
       // Consulta todos os produtos no banco de dados, incluindo o ID
@@ -74,7 +82,7 @@ export class EstoqueController {
       // Mapeia os resultados para uma lista de objetos ProdutoConcreto
       return resultado.rows.map(row => {
         // Aqui, criamos um novo produto com base nos dados do banco, incluindo o ID
-        const produto = new ProdutoConcreto(row.nome, row.preco, row.quantidade, row.categoria);
+        const produto = new Product(row.nome, row.preco, row.quantidade, row.categoria);
         produto.id = row.id; // Atribui o ID do banco de dados ao produto
         return produto;
       });
@@ -111,8 +119,6 @@ export class EstoqueController {
       console.error("Erro ao editar produto:", err);
     }
   }
-
-  
 }
 
 
