@@ -8,16 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync
-const EstoqueController_1 = require("../control/EstoqueController"); // Importa o controlador
-class AdicionarScreen {
+const ScreenView_1 = require("./ScreenView");
+class AdicionarScreen extends ScreenView_1.ScreenView {
     constructor(controlador) {
-        this.prompt = (0, prompt_sync_1.default)();
+        super();
         this.controlador = controlador;
+    }
+    prompt(message) {
+        return this.promptSync(`[ ${message}]`);
     }
     adicionarProduto() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -44,7 +43,7 @@ class AdicionarScreen {
             }
             //PEdir pro controle me dar um produto, não posso instanciar um 
             let novoProduto = this.controlador.getNewProduto(nome, preco, quantidade, categoriaString);
-            yield EstoqueController_1.EstoqueController.adicionarProduto(novoProduto);
+            yield this.controlador.adicionarProduto(novoProduto);
         });
     }
 }

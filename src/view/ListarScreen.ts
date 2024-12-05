@@ -1,6 +1,6 @@
 import promptSync from 'prompt-sync';  // Importa o prompt-sync para capturar a entrada do usuário
 import { EstoqueController } from '../control/EstoqueController';
-import {ScreenView} from "./screen";
+import {ScreenView} from "./ScreenView";
 
 export default class ListarScreen extends ScreenView {
   private controlador: EstoqueController;

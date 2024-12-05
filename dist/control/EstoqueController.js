@@ -14,17 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EstoqueController = void 0;
 const Database_1 = require("../db/Database");
-const ProdutoConcreto_1 = require("../model/ProdutoConcreto");
+const Product_1 = require("../model/Product");
 const AdicionarScreen_1 = __importDefault(require("../view/AdicionarScreen"));
 const EstoqueScreen_1 = require("../view/EstoqueScreen");
 const ListarScreen_1 = __importDefault(require("../view/ListarScreen"));
 const EditarScreen_1 = __importDefault(require("../view/EditarScreen"));
 const RemoverScreen_1 = __importDefault(require("../view/RemoverScreen"));
 class EstoqueController {
-    constructor() {
+    constructor(productRepository) {
         this.estoqueScreen = new EstoqueScreen_1.EstoqueScreen(this);
         this.screens = new Map();
         this.initializeScreens();
+        this.repository = productRepository;
     }
     initializeScreens() {
         this.screens.set('adicionar', new AdicionarScreen_1.default(this));
@@ -43,7 +44,7 @@ class EstoqueController {
         return screen;
     }
     getNewProduto(nome, preco, quantidade, categoriaString) {
-        return new ProdutoConcreto_1.ProdutoConcreto(nome, preco, quantidade, categoriaString);
+        return new Product_1.Product(nome, preco, quantidade, categoriaString);
     }
     // Função para exibir o menu e processar a escolha do usuário
     exibirMenu() {
@@ -52,27 +53,9 @@ class EstoqueController {
         });
     }
     // Método para adicionar um novo produto
-    static adicionarProduto(produto) {
+    adicionarProduto(produto) {
         return __awaiter(this, void 0, void 0, function* () {
-            const pool = yield Database_1.Database.getConexao();
-            try {
-                // Query para inserir o produto na tabela 'produtos'
-                const query = `
-        INSERT INTO produtos (nome, preco, quantidade,categoria)
-        VALUES ($1, $2, $3,$4)
-        RETURNING id
-      `;
-                // Valores a serem inseridos
-                const valores = [produto.nome, produto.preco, produto.quantidade, produto.categoria];
-                // Executa a query para inserir e obter o ID gerado
-                const resultado = yield pool.query(query, valores);
-                const idGerado = resultado.rows[0].id;
-                // Atribui o ID gerado pelo banco ao produto usando o setter
-                produto.id = idGerado; // Usando o setter para atribuir o id
-            }
-            catch (err) {
-                console.error("Erro ao adicionar produto:", err);
-            }
+            yield this.repository.insertProduct(produto);
         });
     }
     static removerProduto(id) {
@@ -104,7 +87,7 @@ class EstoqueController {
                 // Mapeia os resultados para uma lista de objetos ProdutoConcreto
                 return resultado.rows.map(row => {
                     // Aqui, criamos um novo produto com base nos dados do banco, incluindo o ID
-                    const produto = new ProdutoConcreto_1.ProdutoConcreto(row.nome, row.preco, row.quantidade, row.categoria);
+                    const produto = new Product_1.Product(row.nome, row.preco, row.quantidade, row.categoria);
                     produto.id = row.id; // Atribui o ID do banco de dados ao produto
                     return produto;
                 });

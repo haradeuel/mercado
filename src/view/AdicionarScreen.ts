@@ -2,7 +2,7 @@ import promptSync from 'prompt-sync'; // Importa o prompt-sync
 import { EstoqueController } from "../control/EstoqueController"; // Importa o controlador
 import { Product } from "../model/Product"; // Importa o produto concreto
 import BaseProduto from '../model/BaseProduto';
-import { ScreenView } from "./screen";
+import { ScreenView } from "./ScreenView";
 
 
 export default class AdicionarScreen extends ScreenView {

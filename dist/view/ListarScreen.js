@@ -8,20 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const prompt_sync_1 = __importDefault(require("prompt-sync")); // Importa o prompt-sync para capturar a entrada do usuário
 const EstoqueController_1 = require("../control/EstoqueController");
-class ListarScreen {
+const ScreenView_1 = require("./ScreenView");
+class ListarScreen extends ScreenView_1.ScreenView {
     constructor(controlador) {
-        this.prompt = (0, prompt_sync_1.default)();
+        super();
         this.controlador = controlador;
     }
     listarProdutos() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Você escolheu listar os produtos.");
+            this.log("Você escolheu listar os produtos.");
             // Chama o controlador para obter os produtos
             const produtos = yield EstoqueController_1.EstoqueController.listarProdutos();
             if (produtos.length === 0) {

@@ -7,7 +7,7 @@ import ListarScreen from "../view/ListarScreen";
 import EditarScreen from "../view/EditarScreen";
 import RemoverScreen from "../view/RemoverScreen";
 
-import {ProductRepository} from "../db/product-repository";
+import {ProductRepository} from "../db/ProductRepository";
 type Screens = AdicionarScreen | ListarScreen | EditarScreen | RemoverScreen;
 
 export class EstoqueController {

@@ -1,5 +1,5 @@
 import { EstoqueController } from "./control/EstoqueController";
-import {ProductDatabaseRepository} from "./db/product-database-repository";
+import {ProductDatabaseRepository} from "./db/ProductDatabaseRepository";
 // Função principal para rodar o sistema
 
 async function main() {

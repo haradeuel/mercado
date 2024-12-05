@@ -10,10 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const EstoqueController_1 = require("./control/EstoqueController");
+const product_database_repository_1 = require("./db/product-database-repository");
 // Função principal para rodar o sistema
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const estoqueController = new EstoqueController_1.EstoqueController(); // Instancia o controlador
+        const productRepository = new product_database_repository_1.ProductDatabaseRepository();
+        const estoqueController = new EstoqueController_1.EstoqueController(productRepository); // Instancia o controlador
         // Exibe o menu e aguarda a interação
         yield estoqueController.exibirMenu(); // O controlador cuida de tudo
     });

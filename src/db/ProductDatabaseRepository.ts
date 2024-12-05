@@ -1,6 +1,6 @@
-import {Repository} from "./repository";
+import {Repository} from "./Respository";
 import BaseProduto from "../model/BaseProduto";
-import {ProductRepository} from "./product-repository";
+import {ProductRepository} from "./ProductRepository";
 
 export class ProductDatabaseRepository extends Repository implements ProductRepository {
   async insertProduct(product: BaseProduto) {

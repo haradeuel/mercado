@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-
+''
 export class Database {
   private static pool: Pool;
 
