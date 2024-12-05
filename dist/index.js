@@ -8,15 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const EstoqueController_1 = require("./control/EstoqueController");
+const ProductDatabaseRepository_1 = __importDefault(require("./db/ProductDatabaseRepository"));
 // Função principal para rodar o sistema
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const estoqueController = new EstoqueController_1.EstoqueController(); // Instancia o controlador
-        // Exibe o menu e aguarda a interação
-        yield estoqueController.exibirMenu(); // O controlador cuida de tudo
+        const productRepository = new ProductDatabaseRepository_1.default();
+        const estoqueController = new EstoqueController_1.EstoqueController(productRepository);
+        yield estoqueController.exibirMenu();
     });
 }
-// Executa a função principal
 main();

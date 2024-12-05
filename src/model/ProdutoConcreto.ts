@@ -1,4 +1,4 @@
-import Produto from "./Produto";  // Importando a classe Produto
+import Produto from "./BaseProduct";  // Importando a classe Produto
 
 export class ProdutoConcreto extends Produto {
  

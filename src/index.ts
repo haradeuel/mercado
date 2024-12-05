@@ -1,12 +1,11 @@
 import { EstoqueController } from "./control/EstoqueController";
+import ProductDatabaseRepository from "./db/ProductDatabaseRepository";
 // Função principal para rodar o sistema
 
 async function main() {
-  const estoqueController = new EstoqueController(); // Instancia o controlador
-
-  // Exibe o menu e aguarda a interação
-  await estoqueController.exibirMenu(); // O controlador cuida de tudo
+  const productRepository = new ProductDatabaseRepository();
+  const estoqueController = new EstoqueController(productRepository); 
+  await estoqueController.exibirMenu(); 
 }
 
-// Executa a função principal
 main();

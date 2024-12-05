@@ -1,4 +1,4 @@
-export default abstract class Produto {
+export default abstract class BaseProduct {
     private _id: number;
     private _nome: string;
     private _preco: number;

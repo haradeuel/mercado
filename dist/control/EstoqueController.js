@@ -20,11 +20,13 @@ const EstoqueScreen_1 = require("../view/EstoqueScreen");
 const ListarScreen_1 = __importDefault(require("../view/ListarScreen"));
 const EditarScreen_1 = __importDefault(require("../view/EditarScreen"));
 const RemoverScreen_1 = __importDefault(require("../view/RemoverScreen"));
+const Product_1 = require("../model/Product");
 class EstoqueController {
-    constructor() {
+    constructor(productRepository) {
         this.estoqueScreen = new EstoqueScreen_1.EstoqueScreen(this);
         this.screens = new Map();
         this.initializeScreens();
+        this.repository = productRepository;
     }
     initializeScreens() {
         this.screens.set('adicionar', new AdicionarScreen_1.default(this));
@@ -43,7 +45,7 @@ class EstoqueController {
         return screen;
     }
     getNewProduto(nome, preco, quantidade, categoriaString) {
-        return new ProdutoConcreto_1.ProdutoConcreto(nome, preco, quantidade, categoriaString);
+        return new Product_1.Product(nome, preco, quantidade, categoriaString);
     }
     // Função para exibir o menu e processar a escolha do usuário
     exibirMenu() {

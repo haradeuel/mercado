@@ -1,19 +1,24 @@
 import { Database } from "../db/Database";
-import Produto from "../model/Produto";
+import Produto from "../model/BaseProduct";
 import { ProdutoConcreto } from "../model/ProdutoConcreto";
 import AdicionarScreen from "../view/AdicionarScreen";
 import { EstoqueScreen } from "../view/EstoqueScreen";
 import ListarScreen from "../view/ListarScreen";
 import EditarScreen from "../view/EditarScreen";
 import RemoverScreen from "../view/RemoverScreen";
+import { ProductRepository } from "../db/ProductRepository";
+import { Product } from "../model/Product";
 type Screens = AdicionarScreen | ListarScreen | EditarScreen | RemoverScreen;
 
 export class EstoqueController {
   private estoqueScreen: EstoqueScreen = new EstoqueScreen(this);
   private screens: Map<string, Screens> = new Map();
+  private repository: ProductRepository;
 
-  constructor(){
+
+  constructor(productRepository: ProductRepository){
     this.initializeScreens();
+    this.repository = productRepository;
   }
   
   private initializeScreens(): void {
@@ -35,8 +40,8 @@ export class EstoqueController {
   }
   
 
-  public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):ProdutoConcreto{
-      return new ProdutoConcreto(nome,preco,quantidade,categoriaString);
+  public getNewProduto(nome:string, preco:number,quantidade: number,categoriaString: string):Product{
+      return new Product(nome,preco,quantidade,categoriaString);
   }
    
   // Função para exibir o menu e processar a escolha do usuário

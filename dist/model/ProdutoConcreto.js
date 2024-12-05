@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProdutoConcreto = void 0;
-const Produto_1 = __importDefault(require("./Produto")); // Importando a classe Produto
-class ProdutoConcreto extends Produto_1.default {
+const BaseProduct_1 = __importDefault(require("./BaseProduct")); // Importando a classe Produto
+class ProdutoConcreto extends BaseProduct_1.default {
     // O construtor da subclasse chama o construtor da classe abstrata
     constructor(nome, preco, quantidade, categoria) {
         super(nome, preco, quantidade, categoria); // Chama o construtor da classe pai (Produto)
